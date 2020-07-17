@@ -24,9 +24,9 @@ export class MemberDetailComponent implements OnInit {
   ngOnInit() {
    // this.loadUser();                 // resolver replaces the load user
    this.route.data.subscribe(data => {   // it removes ? in the html
-     this.user = data['user'];           // because we get the data before the root
-   });
-
+     this.user = data['user'];           // because we get the data
+   });                                   // before activating the root
+                                        // no more safe navigation '?'
    this.galleryOptions = [
     {
       width: '500px',
@@ -52,8 +52,6 @@ export class MemberDetailComponent implements OnInit {
         }
         return imageUrls;
       }
-
-
 
   // members/4
 
