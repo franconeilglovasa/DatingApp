@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { User } from '../../_models/user';
 import { UserService } from 'src/app/_services/user.service';
 import { AlertifyService } from 'src/app/_services/alertify.service';
 import { ActivatedRoute } from '@angular/router';
 import { NgxGalleryOptions, NgxGalleryImage, NgxGalleryAnimation } from 'ngx-gallery';
+import { TabsetComponent } from 'ngx-bootstrap/tabs';
 
 @Component({
   selector: 'app-member-detail',
@@ -11,6 +12,7 @@ import { NgxGalleryOptions, NgxGalleryImage, NgxGalleryAnimation } from 'ngx-gal
   styleUrls: ['./member-detail.component.css'],
 })
 export class MemberDetailComponent implements OnInit {
+  @ViewChild('memberTabs', {static: true}) memberTabs: TabsetComponent;
   user: User;
   galleryOptions: NgxGalleryOptions[];
   galleryImages: NgxGalleryImage[];
@@ -27,6 +29,14 @@ export class MemberDetailComponent implements OnInit {
      this.user = data['user'];           // because we get the data
    });                                   // before activating the root
                                         // no more safe navigation '?'
+
+// this will receive the route from the messages-component
+// the querryparams so that tab 3 will be active
+   this.route.queryParams.subscribe(params => {
+     const selectedTab = params['tab'];
+     this.memberTabs.tabs[selectedTab > 0 ? selectedTab : 0].active = true;
+   });
+
    this.galleryOptions = [
     {
       width: '500px',
@@ -53,6 +63,10 @@ export class MemberDetailComponent implements OnInit {
         return imageUrls;
       }
 
+      selectTab(tabId: number) {
+        this.memberTabs.tabs[tabId].active = true;
+      }
+
   // members/4
 
   // loadUser() {
@@ -67,4 +81,5 @@ export class MemberDetailComponent implements OnInit {
   //       }
   //     );
   // }
+
 }

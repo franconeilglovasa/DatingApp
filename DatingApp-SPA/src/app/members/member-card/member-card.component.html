@@ -18,7 +18,13 @@
         </button>
       </li>
       <li class="list-inline-item">
-        <button class="btn btn-primary">
+
+        <!-- this button will let you redirect to message tab  -->
+        <button
+          class="btn btn-primary"
+          [routerLink]="['/members/', user.id]"
+          [queryParams]="{ tab: 3 }"
+        >
           <i class="fa fa-envelope"></i>
         </button>
       </li>
